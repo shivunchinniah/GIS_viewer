@@ -1,31 +1,19 @@
 package io.github.shivun_wits.gis_viewer;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import java.awt.image.AffineTransformOp;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
@@ -34,9 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Affine;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -122,19 +108,15 @@ public class App extends Application {
 
         fileSelectButton.setOnAction(event -> {
             File selectedFile = fileChooser.showOpenDialog(stage);
-
             if (selectedFile != null) {
                 filePathTxt.setText(selectedFile.getAbsolutePath());
-
                 Thread compute = new Thread() {
                     @Override
                     public void run() {
                         imageCanvas.loadImage(selectedFile);
                     }
                 };
-
                 compute.start();
-
             } else {
                 filePathTxt.setText("No File Selected");
             }
@@ -142,8 +124,11 @@ public class App extends Application {
 
         fileSelectButton.setText("Select File");
 
-        vBox.setPadding(new Insets(5));
+        Text controls = new Text("To pan use:\t'W': up\t'D': right\t'S' down\t'A': left");
+        Text Zoom = new Text("To zoom use the bar below:");
 
+        vBox.setPadding(new Insets(5));
+        vBox.getChildren().add(controls);
         vBox.getChildren().add(message);
         vBox.getChildren().add(statusMessage);
         vBox.getChildren().add(filePathTxt);
@@ -152,6 +137,7 @@ public class App extends Application {
         vBox.getChildren().addAll(
                 imageCanvas.getImageProgressBar(),
                 imageCanvas.getStatusMessage(),
+                Zoom,
                 imageCanvas.getZoomSlider()
                 );
 
@@ -190,38 +176,5 @@ public class App extends Application {
         int[] out = { xpos, ypos, rectW, rectH };
         return out;
     }
-
-    // public static Image scaleImage(BufferedImage pic, int width, int height) {
-
-    // // BufferedImage out = new BufferedImage(600, 400,
-    // BufferedImage.TYPE_INT_ARGB);
-
-    // int targW, targH;
-
-    // if (pic.getWidth() > pic.getHeight()) {
-    // targW = width;
-    // targH = (int) (pic.getHeight() * ((double) width / pic.getWidth()));
-    // } else {
-    // targH = height;
-    // targW = (int) (pic.getWidth() * ((double) height / pic.getHeight()));
-    // }
-
-    // BufferedImage out = BufferedImageFilter.resize(pic, targW, targH);
-
-    // pic.flush();
-    // return SwingFXUtils.toFXImage((BufferedImage) out, null);
-    // }
-
-    // static void updateZoom() {
-    // zoomText.setText("Zoom: " + 1/zoomLevel);
-    // message.setText("X: " + zoomX + "\t\tY: " + zoomY);
-
-    // int[] fit = fitDimensions(loadedImage, zoomX, zoomY, zoomLevel);
-    // // System.out.println("Fit x:" + fit[0] + " y:" + fit[1]);
-
-    // imageView.setImage(scaleImage(loadedImage.getSubimage(fit[0], fit[1], fit[2],
-    // fit[3]), 600, 400));
-
-    // }
 
 }

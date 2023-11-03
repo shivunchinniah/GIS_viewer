@@ -2,7 +2,6 @@ package io.github.shivun_wits.gis_viewer;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.RecursiveAction;
-import java.util.concurrent.RecursiveTask;
 
 public class BufferedImageFilter {
 
@@ -72,9 +71,6 @@ public class BufferedImageFilter {
 
         @Override
         protected void compute() {
-
-            System.out.println("Start: "+start + " end: "+end);
-
             int length = end - start;
 
             if (length < threshold) {

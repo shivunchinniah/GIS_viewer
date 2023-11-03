@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Main-Class: io.github.shivun_wits.gis_viewer.Main
+Class-Path: javafx-swing-11-win.jar javafx-base-11.jar imageio-tiff-3.8.
+ 1.jar javafx-graphics-11-win.jar javafx-controls-11.jar common-lang-3.8
+ .1.jar javafx-base-11-win.jar javafx-fxml-11-win.jar imageio-metadata-3
+ .8.1.jar common-image-3.8.1.jar javafx-fxml-11.jar imageio-core-3.8.1.j
+ ar javafx-graphics-11.jar javafx-controls-11-win.jar imageio-jpeg-3.8.1
+ .jar javafx-swing-11.jar common-io-3.8.1.jar
+

@@ -1,6 +1,5 @@
 package io.github.shivun_wits.gis_viewer;
 
-import javafx.beans.Observable;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.text.Text;
@@ -59,7 +58,6 @@ public class ImageCanvas {
 
         zoomSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             zoomLevel = newValue.doubleValue();
-            System.out.println("Zoom level" + zoomLevel);
             drawImage();
         });
 
@@ -251,8 +249,7 @@ public class ImageCanvas {
             int[] cropParams = calcluateImageCropParameters();
             Image img = scaleImage(loadedImage.getSubimage(cropParams[0], cropParams[1], cropParams[2], cropParams[3]),
                     WIDTH, HEIGHT);
-            System.out.println("Scaled w:" + img.getWidth() + " h:" + img.getHeight());
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, WIDTH/2 - img.getWidth()/2, HEIGHT/2 - img.getHeight()/2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -277,11 +274,6 @@ public class ImageCanvas {
         new ForkJoinPool().invoke(r);
         BufferedImage out = r.out;
         // BufferedImage out = BufferedImageFilter.resize(pic, targW, targH);
-
-        // // check if out height is greater than maximum allowed
-        // if (out.getHeight() > HEIGHT)
-        // out = BufferedImageFilter.resize(out, out.getWidth() * HEIGHT / WIDTH,
-        // HEIGHT);
 
         pic.flush();
         return SwingFXUtils.toFXImage((BufferedImage) out, null);
